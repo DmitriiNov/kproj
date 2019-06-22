@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <br>
+  <div class="row">
+    <h1>Добавить игру</h1>
+  </div>
+  <div class="row">
+    <form action="/addxml" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for='char'>Имя персонажа</label>
+        <input type="text" class="form-control" name="char" required/>
+      </div>
+      <div class="form-group">
+        <label for='inputF'>Загрузите XML файл</label>
+        <input type="file" class="form-control-file" name="inputF" required/>
+      </div>
+      <input type="submit" class="btn btn-primary"/>
+    </form>
+  </div>
+</div>
+{% endblock %}
