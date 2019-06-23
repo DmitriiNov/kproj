@@ -1,42 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="container" style="margin-top:10px">
   <div class="row">
       <div class="col-md-12">
-      <div class="card text-white bg-primary mb-3">
+      <div class="card border-primary text-center mb-3">
         <div class="card-body">
-          <p class="card-text">Управдомами с радостью согласились с вашими предложениями, вы не только дали им взятку за фальсификацию внутридомовых голосований и последующую передачу списков на рассмотрение в администрацию, но и построили новую детскую площадку. У жильцов смешанные чувства насчет Вашей персоны, однако спустя несколько недель после слушаний, люди начинают задавать вопросы, заподозрив неладное, и неизвестно, чем это закончится.</p>
+          <p class="card-text">{{ question.text }}</p>
+          {% if length == 0%}
+          <form action="{{ url_for('games') }}" method="post">
+            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Вернуться к выбору квеста"/>
+          </form>
+          {% endif %}
         </div>
       </div>
       </div>
   </div>
   <div class="row">
-      <div class="col-md-12">
-      <div class="card border-primary text-center mb-3">
-        <div class="card-body">
-          <p class="card-text">Что делаем дальше?</p>
-        </div>
-      </div>
-      </div>
-  </div>
-  <div class="row">
+    {% for ans in answers %}
       <div class="col-sm-6">
       <div class="card border-primary text-center mb-3">
         <div class="card-body">
-          <p class="card-text">Выделить средства на капитальный ремонт подъездов.</p>
-          <button type="button" class="btn btn-primary btn-lg btn-block">Выбрать</button>
+          <p class="card-text">{{ ans.text }}</p>
+          <form action="{{ url_for('game') }}" method="post">
+            <input type="hidden" name="quest" value="{{ ans.nextqID }}"/>
+            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Выбрать"/>
+          </form>
         </div>
       </div>
       </div>
-      <div class="col-sm-6">
-      <div class="card border-primary text-center mb-3">
-        <div class="card-body">
-          <p class="card-text">Вы уповаете на то, что все утихомирится</p>
-          <button type="button" class="btn btn-primary btn-lg btn-block">Выбрать</button>
-        </div>
-      </div>
-      </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

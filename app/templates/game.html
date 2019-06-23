@@ -17,7 +17,7 @@
         <div class="card-body">
           <p class="card-text">{{ game.text }}</p>
           <form action="{{ url_for('game') }}" method="post">
-            <input type="hidden" name="del" value="{{ game.firstqID }}"/>
+            <input type="hidden" name="quest" value="{{ game.firstqID }}"/>
             <input type="submit" class="btn btn-primary btn-lg btn-block" value="Начать игру"/>
           </form>
         </div>

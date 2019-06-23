@@ -23,14 +23,22 @@ def addcard():
 
 
 @app.route('/game', methods=['GET', 'POST'])
-def game(Pid):
-    return render_template("games.html")
+def game():
+    Qid = request.form["quest"]
+    question = Question.query.filter_by(id=Qid).first()
+    if question is not None:
+        answers = question.answers
+        length = len(answers)
+        return render_template("games.html", question=question, answers=answers, length = length)
+    else:
+        return redirect(url_for('games'))
+
 
 @app.route('/konec', methods=['GET', 'POST'])
 def konec():
     return render_template('konec.html')
 
-@app.route('/games', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def games():
     games = Game.query.all()
     length = len(games)
