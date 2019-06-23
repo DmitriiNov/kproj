@@ -2,22 +2,35 @@
 
 {% block content %}
 
-{% if count != 0 %}
+{% if length != 0 %}
+
 <div class="container" style="margin-top:10px">
+  <div class="row">
+    <h1>Выберете</h1>
+  </div>
   <div class="row">
 
       {% for game in games %}
       <div class="col-md-3">
       <div class="card border-primary mb-3">
-        <div class="card-header">{{ game }}</div>
+        <div class="card-header">{{ game.character }}</div>
         <div class="card-body">
-          <p class="card-text">Описание игры</p>
-          <button type="button" class="btn btn-primary btn-lg btn-block">Начать игру</button>
+          <p class="card-text">{{ game.text }}</p>
+          <form action="{{ url_for('game') }}" method="post">
+            <input type="hidden" name="del" value="{{ game.firstqID }}"/>
+            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Начать игру"/>
+          </form>
         </div>
       </div>
       </div>
       {% endfor %}
 
+  </div>
+</div>
+{% else %}
+<div class="container" style="margin-top:10px">
+  <div class="row">
+    <h1>На данный момент игр нет, зайдите позже</h1>
   </div>
 </div>
 {% endif %}

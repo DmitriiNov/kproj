@@ -1,4 +1,5 @@
 from app import app
+from flask import Flask
 from app.forms import Addcard
 from app.models import Game, Question, Answer
 from lxml import etree
@@ -20,25 +21,27 @@ def addcard():
     return render_template('addcard.html', Addcard=AddCard)
 
 
-@app.route('/', methods=['GET', 'POST'])
-def game():
-    games = ['Полицейский','Чиновник', 'Учитель\nмужчина', 'Учитель\nженщина', 'Врач']
-    count = len(games)
-    return render_template('game.html', count=count, games=games)
 
-@app.route('/games', methods=['GET', 'POST'])
-def games():
-    return render_template('games.html')
+@app.route('/game', methods=['GET', 'POST'])
+def game(Pid):
+    return render_template("games.html")
 
 @app.route('/konec', methods=['GET', 'POST'])
 def konec():
     return render_template('konec.html')
+
+@app.route('/games', methods=['GET', 'POST'])
+def games():
+    games = Game.query.all()
+    length = len(games)
+    return render_template('game.html', games=games, length=length)
+
 
 @app.route('/addxml', methods=['GET', 'POST'])
 def addxml():
     name = 'ede'
     file = request.files['inputF']
     name = file.filename
-    with open(file.stream) as fobj:
-        xml = fobj.read()
+    a =  file.read()
+    root = etree.fromstring(a)
     return render_template('xml.html', name=name)
